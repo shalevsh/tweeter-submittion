@@ -20,6 +20,7 @@ const TweeterModule = () => {
             }
         }
     };
+    
     const removeComment = (postId, commentId) => {
         for (const post of _posts) {
             if (postId === post.id) {
