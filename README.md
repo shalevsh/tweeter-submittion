@@ -3,8 +3,6 @@
 # Contents
 
 - [Overview](#overview-)
-- [Game Functionality](#functionality-)
-- [Game Description](#description-)
 - [Technologies](#technologies-)
 - [ScreenShots](#ScreenShots-)
 - [Videos](#videos-)
