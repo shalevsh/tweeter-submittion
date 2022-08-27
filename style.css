@@ -1,0 +1,126 @@
+body{
+    background-color: #ecf0f1;
+    background-image: url("https://miro.medium.com/max/1050/1*lK-lzXrUD-4mxr_3IZH28w.jpeg");
+    font-family: 'Balthazar', serif;
+    background-repeat: no-repeat;
+    background-size: 100% 250px;
+    ;
+}
+
+#container{
+    display: grid;
+    grid-gap: 20px;
+    padding-left: 25px;
+    padding-right: 25px;
+    grid-template-columns: 3fr 1fr;
+    grid-template-areas: 
+    "h .""i b""p p"
+}
+
+#header{
+    grid-area: h;
+    color: #3498db;
+}
+
+#input{
+    grid-area: i;
+    padding: 10px;
+    font-weight: bold;
+    font-size: large;
+}
+
+#posts{
+    grid-area: p;
+}
+
+#post{
+    grid-area: b;
+    padding: 10px;
+    background-color: #3498db;
+    border: 1px solid #2980b9;
+    box-shadow: 1px 1px 5px #2c3e50;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    font-size: 2.5vw;
+    
+}
+@keyframes append-animate {
+	from {
+		transform: scale(0);
+		opacity: 0;
+	}
+	to {
+		transform: scale(1);
+		opacity: 1;	
+	}
+}
+
+.post{
+    box-shadow: 1px 1px 3px;
+    margin: 10px;
+    border-radius: 5px;
+    border-style: solid;
+    padding: 10px;
+}
+.last-post{
+    box-shadow: 1px 1px 3px;
+    margin: 10px;
+    border-radius: 5px;
+    border-style: solid;
+    padding: 10px;
+    animation: append-animate .3s linear;
+}
+
+#post:active{
+    background-color: #2980b9
+}
+
+.post-text{
+    font-weight: bold;
+    font-size: xx-large;
+    word-break: break-all;
+}
+
+
+.comments{
+    margin-left: 10px;
+    margin: 10px;
+    border-style: groove;
+    word-break: break-all;
+    margin: 10px;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+
+.delete{
+    cursor: pointer;
+    color: #ecf0f1;
+    background-color: #e74c3c;
+    display: inline-block;
+    padding: 5px;
+    border-radius: 3px;
+    font-size: 0.8em;
+}
+
+.delete-comment{
+    cursor: pointer;
+    color: #e74c3c;
+}
+.comment-submit{
+    color: #ecf0f1;
+    background-color:#2980b9;
+    float: right;
+}
+.input-comment{
+  width:216 px; 
+  height:14 px;
+}
+.fa{
+    float: right;
+}
+textarea {
+	min-height: 0.2em;
+	max-height: 50vh;
+}	
