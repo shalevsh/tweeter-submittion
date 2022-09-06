@@ -8,7 +8,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-Object.defineProperty(exports, "__esModule", { value: true });
 class moduleData {
     constructor() {
         this.users = [];
@@ -16,15 +15,22 @@ class moduleData {
         this.aboutMe = "";
         this.pokemon = null;
     }
+    fetchData() {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield this.getRandomUsers();
+        });
+    }
     getRandomUsers() {
         return __awaiter(this, void 0, void 0, function* () {
-            yield fetch('https://randomuser.me/api/?results=5000')
+            return yield fetch('https://randomuser.me/api/?results=5000')
                 .then((response) => response.json())
-                .then((data) => console.log(data));
+                .then((data) => {
+                console.log(data);
+                this.users.push(data);
+            });
         });
     }
 }
-exports.default = moduleData;
 // arr.forEach((p:PersonNameOnly)=>{console.log(p.name)})
 // fetch('https://randomuser.me/api/?results=7')
 //   .then((response) => response.json())

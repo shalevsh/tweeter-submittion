@@ -1,16 +1,22 @@
 
-export default class moduleData{
-    users=[];
-    quote=""
+class moduleData<Type>{
+    users:Type[]=[];
+    quote="";
     aboutMe=""
-    pokemon = null
+    pokemon=null;
 
-
-    async getRandomUsers(){
-    await fetch('https://randomuser.me/api/?results=5000')
-      .then((response) => response.json())
-      .then((data) => console.log(data));
+    
+    async fetchData(){
+        await this.getRandomUsers();
     }
+    async getRandomUsers(){
+        return await fetch('https://randomuser.me/api/?results=5000')
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data)
+            this.users.push(data);
+          });
+        }
     
     
     
