@@ -1,38 +1,45 @@
 
+const NUMBER_OF_POKEMONS = 949;
 class moduleData<Type>{
-    users:Type[]=[];
+    users:User[]=[];
     quote="";
     aboutMe=""
-    pokemon=null;
+    pokemon:Pokemon=new Pokemon("","");
 
     
     async fetchData(){
-        await this.getRandomUsers();
+        Promise.all([await this.getRandomUsers(),await this.getQuote(),await this.getPokemon()]);
     }
     async getRandomUsers(){
-        return await fetch('https://randomuser.me/api/?results=5000')
+        return await fetch('https://randomuser.me/api/?results=7')
           .then((response) => response.json())
           .then((data) => {
-            console.log(data)
-            this.users.push(data);
-          });
-        }
-    
-    
-    
+           let arrayOfUsers = data.results;
+           arrayOfUsers.forEach((user: any)=>{ 
+            this.users.push(
+                new User(
+                user.name.first,
+                user.name.last,
+                user.location.city,
+                user.location.state,
+                user.picture.medium
+                )
+                )
+            })
+        })
     }
-    interface Person {
-        name : string;
-        age : number;
-        isCat : boolean;
+    async getQuote(){
+        return await fetch('https://api.kanye.rest')
+        .then((response) => response.json())
+        .then((data)=>this.quote = data.quote)
     }
     
-    interface PersonNameOnly {
-        name : string;
+    async getPokemon(){
+        const pokemonId = Math.floor(Math.random() * NUMBER_OF_POKEMONS)+1;
+        return await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}/`)
+        .then((response) => response.json())
+        .then((data)=> this.pokemon=new Pokemon(data.name,data.sprites.front_default));
     }
-
+}
     
-    // arr.forEach((p:PersonNameOnly)=>{console.log(p.name)})
-    // fetch('https://randomuser.me/api/?results=7')
-    //   .then((response) => response.json())
-    //   .then((data) => console.log(data));
+    

@@ -8,30 +8,44 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+const NUMBER_OF_POKEMONS = 949;
 class moduleData {
     constructor() {
         this.users = [];
         this.quote = "";
         this.aboutMe = "";
-        this.pokemon = null;
+        this.pokemon = new Pokemon("", "");
     }
     fetchData() {
         return __awaiter(this, void 0, void 0, function* () {
-            yield this.getRandomUsers();
+            Promise.all([yield this.getRandomUsers(), yield this.getQuote(), yield this.getPokemon()]);
         });
     }
     getRandomUsers() {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield fetch('https://randomuser.me/api/?results=5000')
+            return yield fetch('https://randomuser.me/api/?results=7')
                 .then((response) => response.json())
                 .then((data) => {
-                console.log(data);
-                this.users.push(data);
+                let arrayOfUsers = data.results;
+                arrayOfUsers.forEach((user) => {
+                    this.users.push(new User(user.name.first, user.name.last, user.location.city, user.location.state, user.picture.medium));
+                });
             });
         });
     }
+    getQuote() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield fetch('https://api.kanye.rest')
+                .then((response) => response.json())
+                .then((data) => this.quote = data.quote);
+        });
+    }
+    getPokemon() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const pokemonId = Math.floor(Math.random() * NUMBER_OF_POKEMONS) + 1;
+            return yield fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}/`)
+                .then((response) => response.json())
+                .then((data) => this.pokemon = new Pokemon(data.name, data.sprites.front_default));
+        });
+    }
 }
-// arr.forEach((p:PersonNameOnly)=>{console.log(p.name)})
-// fetch('https://randomuser.me/api/?results=7')
-//   .then((response) => response.json())
-//   .then((data) => console.log(data));
