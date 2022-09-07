@@ -18,7 +18,7 @@ class moduleData {
     }
     fetchData() {
         return __awaiter(this, void 0, void 0, function* () {
-            Promise.all([yield this.getRandomUsers(), yield this.getQuote(), yield this.getPokemon()]);
+            Promise.all([yield this.getRandomUsers(), yield this.getQuote(), yield this.getPokemon(), yield this.getAboutMe()]);
         });
     }
     getRandomUsers() {
@@ -46,6 +46,13 @@ class moduleData {
             return yield fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}/`)
                 .then((response) => response.json())
                 .then((data) => this.pokemon = new Pokemon(data.name, data.sprites.front_default));
+        });
+    }
+    getAboutMe() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield fetch('https://baconipsum.com/api/?type=meat-and-filler')
+                .then((response) => response.json())
+                .then((data) => this.aboutMe = data[0]);
         });
     }
 }

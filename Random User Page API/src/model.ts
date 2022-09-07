@@ -8,8 +8,10 @@ class moduleData<Type>{
 
     
     async fetchData(){
-        Promise.all([await this.getRandomUsers(),await this.getQuote(),await this.getPokemon()]);
+        Promise.all([await this.getRandomUsers(),await this.getQuote(),await this.getPokemon(),await this.getAboutMe()]);
     }
+
+
     async getRandomUsers(){
         return await fetch('https://randomuser.me/api/?results=7')
           .then((response) => response.json())
@@ -39,6 +41,11 @@ class moduleData<Type>{
         return await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}/`)
         .then((response) => response.json())
         .then((data)=> this.pokemon=new Pokemon(data.name,data.sprites.front_default));
+    }
+    async getAboutMe(){
+        return await fetch('https://baconipsum.com/api/?type=meat-and-filler')
+        .then((response) => response.json())
+        .then((data)=>this.aboutMe = data[0])
     }
 }
     
