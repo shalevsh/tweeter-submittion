@@ -14,7 +14,12 @@
 <body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <div class="container">	
-        <div class="user-container"></div>	
+        <div class="user-container">
+            <script id="mainUser-template" type="text/x-handlebars-template">
+                <img src="{{object.img}}" class="user-img">    
+                <p class="user-content">{{object.firstName}} {{object.lastName}}</p><br>
+                <p class="user-content">{{object.state}}, {{object.city}}</p>
+        </div>	
         <div class="quote-container"></div>	
         <div class="content-container">	
             <div class="pokemon-container"></div>	
