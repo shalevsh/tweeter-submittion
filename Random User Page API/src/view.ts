@@ -7,10 +7,10 @@ class Render{
     }
 
     renderTemplate(handleBarTemplate:string,objectKind:any,cssClass:string){           
-        $(cssClass).empty();      
         const source = $(handleBarTemplate).html();
         const template = Handlebars.compile(source)
         const newHTML = template({object:objectKind})
+        $(cssClass).empty();      
         $(cssClass).append(newHTML);       
     }
 
