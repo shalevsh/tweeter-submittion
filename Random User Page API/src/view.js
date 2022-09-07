@@ -25,7 +25,7 @@ class Render {
         this.renderTemplate(HandleBarTemplate.Pokemon, pokemon, CssTemplate.Pokemon);
         this.userData.push(pokemon);
     }
-    RenderQoute(quote) {
+    renderQuote(quote) {
         this.renderTemplate(HandleBarTemplate.Quote, quote, CssTemplate.Quote);
         this.userData.push(quote);
     }
@@ -36,11 +36,11 @@ class Render {
 }
 var CssTemplate;
 (function (CssTemplate) {
-    CssTemplate["User"] = ".user";
-    CssTemplate["Friends"] = ".userFriends";
-    CssTemplate["Pokemon"] = ".pokimon";
-    CssTemplate["Quote"] = ".quote";
-    CssTemplate["About"] = ".about";
+    CssTemplate["User"] = ".user-container";
+    CssTemplate["Friends"] = ".friends-container";
+    CssTemplate["Pokemon"] = ".pokemon-container";
+    CssTemplate["Quote"] = ".quote-container";
+    CssTemplate["About"] = ".about-container";
 })(CssTemplate || (CssTemplate = {}));
 var HandleBarTemplate;
 (function (HandleBarTemplate) {

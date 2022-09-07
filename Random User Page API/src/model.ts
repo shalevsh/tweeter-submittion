@@ -7,8 +7,11 @@ class moduleData<Type>{
     pokemon:Pokemon=new Pokemon("","");
 
     
-    async fetchData(){
-        Promise.all([await this.getRandomUsers(),await this.getQuote(),await this.getPokemon(),await this.getAboutMe()]);
+     fetchData():Promise<PageData>{
+        return Promise.all([this.getRandomUsers(), this.getQuote(), this.getPokemon(), this.getAboutMe()])
+            .then(() => {
+                return new PageData(this.users[0], this.users.slice(1), this.pokemon, this.quote, this.aboutMe);
+            });
     }
 
 

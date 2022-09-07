@@ -17,17 +17,43 @@
         <div class="user-container">
             <script id="mainUser-template" type="text/x-handlebars-template">
                 <img src="{{object.img}}" class="user-img">    
-                <p class="user-content">{{object.firstName}} {{object.lastName}}</p><br>
+                <p class="user-content">{{object.firstName}} - {{object.lastName}}</p><br>
                 <p class="user-content">{{object.state}}, {{object.city}}</p>
         </div>	
-        <div class="quote-container"></div>	
+        <div class="quote-container">
+            <script id="quote-template" type="text/x-handlebars-template">          
+                <p class="favorite">Favorite quote</p>
+                <p class="quote"> <q>{{object.quote}}</q></p>
+    
+       </script>
+        </div>	
         <div class="content-container">	
-            <div class="pokemon-container"></div>	
-            <div class="meat-container"></div>	
+            <div class="pokemon-container">
+                <script id="pokemon-template" type="text/x-handlebars-template">
+                    <img  srcset="{{object.image}}">
+                    <p class="pokemon-name">favorite pockimon: {{object.name}}</p>
+           </script>
+            </div>	
+            <div class="about-container">
+
+                <script id="about-template" type="text/x-handlebars-template">
+              
+                    <p>About Me</p>
+                     <p class="about-content">{{object.text}}</p>
+                         
+                
+            </script>
+            </div>	
         </div>	
         <div class="friends">	
             <h4>Friends</h4>	
             <div class="friends-container">	
+                <script id="friends-template" type="text/x-handlebars-template">
+                    {{#each object}}
+                     <div class="friends-names">{{firstName}} {{lastName}}</div>
+                    {{/each}}        
+                     
+                 </script>
             </div>	
         </div>	
         <div class="generate-container">
@@ -36,6 +62,8 @@
     </div>
     <script src="src/dataClasses/Pokemon.js"></script>
     <script src="src/dataClasses/User.js"></script>
+    <script src="src/dataClasses/PageData.js"></script>
+    <script src="src/view.js"></script>
     <script src="src/model.js"></script>
     <script src="src/main.js"></script>
 </body>

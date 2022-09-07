@@ -17,8 +17,9 @@ class moduleData {
         this.pokemon = new Pokemon("", "");
     }
     fetchData() {
-        return __awaiter(this, void 0, void 0, function* () {
-            Promise.all([yield this.getRandomUsers(), yield this.getQuote(), yield this.getPokemon(), yield this.getAboutMe()]);
+        return Promise.all([this.getRandomUsers(), this.getQuote(), this.getPokemon(), this.getAboutMe()])
+            .then(() => {
+            return new PageData(this.users[0], this.users.slice(1), this.pokemon, this.quote, this.aboutMe);
         });
     }
     getRandomUsers() {

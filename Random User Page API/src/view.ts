@@ -30,7 +30,7 @@ class Render{
         this.userData.push(pokemon)
     }
 
-    RenderQoute(quote:string |Object){
+    renderQuote(quote:string |Object){
        this.renderTemplate(HandleBarTemplate.Quote,quote,CssTemplate.Quote)  
        this.userData.push(quote) 
     }
@@ -45,11 +45,11 @@ class Render{
 }
 
 enum CssTemplate{
-    User = '.user',// '.header',
-    Friends = '.userFriends', //SectionOfUserFriends
-    Pokemon = '.pokimon', //partMainPockimon
-    Quote = '.quote', // partMainQuote
-    About  = '.about', // partMainbackonText
+    User = '.user-container',// '.header',
+    Friends = '.friends-container', //SectionOfUserFriends
+    Pokemon = '.pokemon-container', //partMainPockimon
+    Quote = '.quote-container', // partMainQuote
+    About  = '.about-container', // partMainbackonText
   }
   enum HandleBarTemplate{
     User = "#user-template" ,
