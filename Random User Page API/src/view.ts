@@ -9,7 +9,7 @@ class Render{
     renderTemplate(handleBarTemplate:string,objectKind:any,cssClass:string){           
         const source = $(handleBarTemplate).html();
         const template = Handlebars.compile(source)
-        const newHTML = template({object:objectKind})
+        const newHTML = typeof objectKind ==="string"? template({text:objectKind}): template({object:objectKind})
         $(cssClass).empty();      
         $(cssClass).append(newHTML);       
     }
@@ -32,11 +32,12 @@ class Render{
 
     renderQuote(quote:string |Object){
        this.renderTemplate(HandleBarTemplate.Quote,quote,CssTemplate.Quote)  
+       $(".quote-content").text(`${quote}`);
        this.userData.push(quote) 
     }
 
     renderAboutMe(aboutMe:string |Object){
-        this.renderTemplate(HandleBarTemplate.Friends,aboutMe,CssTemplate.Friends)   
+        this.renderTemplate(HandleBarTemplate.About,aboutMe,CssTemplate.About)   
         this.userData.push(aboutMe)
     }
 

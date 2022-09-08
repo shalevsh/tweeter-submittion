@@ -16,33 +16,30 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <div class="container">	
         <div class="user-container">
-            <script id="mainUser-template" type="text/x-handlebars-template">
-                <img src="{{object.img}}" class="user-img">    
+            <script id="user-template" type="text/x-handlebars-template">
+                <img class="user-img" src="{{object.picture}}">    
                 <p class="user-content">{{object.firstName}} - {{object.lastName}}</p><br>
                 <p class="user-content">{{object.state}}, {{object.city}}</p>
         </div>	
+       
         <div class="quote-container">
-            <script id="quote-template" type="text/x-handlebars-template">          
+            <script id="quote-template" type="text/x-handlebars-template">    
                 <p class="favorite">Favorite quote</p>
-                <p class="quote"> <q>{{object.quote}}</q></p>
-    
-       </script>
+                <p class="quote-content">{{this.text}}</p>      
+            </script>
         </div>	
         <div class="content-container">	
             <div class="pokemon-container">
                 <script id="pokemon-template" type="text/x-handlebars-template">
-                    <img  srcset="{{object.image}}">
-                    <p class="pokemon-name">favorite pockimon: {{object.name}}</p>
+                    <img  srcset="{{object.picture}}">
+                    <p class="pokemon-name">favorite pokemon: {{object.name}}</p>
            </script>
             </div>	
             <div class="about-container">
 
                 <script id="about-template" type="text/x-handlebars-template">
-              
                     <p>About Me</p>
-                     <p class="about-content">{{object.text}}</p>
-                         
-                
+                     <p class="about-content">{{this.text}}</p>
             </script>
             </div>	
         </div>	
