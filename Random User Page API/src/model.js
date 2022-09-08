@@ -20,9 +20,6 @@ class moduleData {
         return __awaiter(this, void 0, void 0, function* () {
             yield Promise.all([this.getRandomUsers(), this.getQuote(), this.getPokemon(), this.getAboutMe()]);
             return new PageData(this.users[0], this.users.slice(1), this.pokemon, this.quote, this.aboutMe);
-            // .then(() => {
-            //    
-            // });
         });
     }
     getRandomUsers() {
