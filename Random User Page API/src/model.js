@@ -56,4 +56,10 @@ class moduleData {
                 .then((data) => this.aboutMe = data[0]);
         });
     }
+    cleanData() {
+        this.users = [];
+        this.quote = "";
+        this.aboutMe = "";
+        this.pokemon = new Pokemon("", "");
+    }
 }

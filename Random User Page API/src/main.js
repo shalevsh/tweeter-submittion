@@ -9,4 +9,5 @@ $("#generate-btn").on("click", function () {
         render.renderQuote(data.getQuote());
         render.renderAboutMe(data.getAbout());
     });
+    module.cleanData();
 });
