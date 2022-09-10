@@ -16,46 +16,50 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <div class="container">	
         <div class="user-container">
-            <script id="user-template" type="text/x-handlebars-template">
-                <img class="user-img" src="{{object.picture}}">    
-                <p class="user-content">{{object.firstName}} - {{object.lastName}}</p><br>
-                <p class="user-content">{{object.state}}, {{object.city}}</p>
         </div>	
-       
+        <script id="user-template" type="text/x-handlebars-template">
+            <img class="user-img" src="{{object.picture}}">    
+            <p class="user-content">{{object.firstName}} - {{object.lastName}}</p><br>
+            <p class="user-content">{{object.state}}, {{object.city}}</p>
+        </script>
+
         <div class="quote-container">
-            <script id="quote-template" type="text/x-handlebars-template">    
-                <p class="favorite">Favorite quote</p>
-                <p class="quote-content">{{this.text}}</p>      
-            </script>
         </div>	
+        <script id="quote-template" type="text/x-handlebars-template">    
+            <p class="favorite">Favorite quote</p>
+            <p class="quote-content">{{this.text}}</p>      
+        </script>
+
         <div class="content-container">	
             <div class="pokemon-container">
-                <script id="pokemon-template" type="text/x-handlebars-template">
-                    <img  srcset="{{object.picture}}">
-                    <p class="pokemon-name">favorite pokemon: {{object.name}}</p>
-           </script>
+                
             </div>	
+            <script id="pokemon-template" type="text/x-handlebars-template">
+                <img  srcset="{{object.picture}}">
+                <p class="pokemon-name">favorite pokemon: {{object.name}}</p>
+       </script>
             <div class="about-container">
 
-                <script id="about-template" type="text/x-handlebars-template">
-                    <p>About Me</p>
-                     <p class="about-content">{{this.text}}</p>
-            </script>
             </div>	
+            <script id="about-template" type="text/x-handlebars-template">
+                <p>About Me</p>
+                 <p class="about-content">{{this.text}}</p>
+        </script>
         </div>	
         <div class="friends">	
             <h4>Friends</h4>	
             <div class="friends-container">	
-                <script id="friends-template" type="text/x-handlebars-template">
-                    {{#each object}}
-                     <div class="friends-names">{{firstName}} {{lastName}}</div>
-                    {{/each}}        
-                     
-                 </script>
+               
             </div>	
+            <script id="friends-template" type="text/x-handlebars-template">
+                {{#each object}}
+                 <div class="friends-names">{{firstName}} {{lastName}}</div>
+                {{/each}}        
+                 
+             </script>
         </div>	
         <div class="generate-container">
-            <button id =generate-brn>generate User</button>
+            <button id =generate-btn>generate User</button>
         </div>	
     </div>
     <script src="src/dataClasses/Pokemon.js"></script>
