@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.min.js"></script>
+    <title>API Project</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
+
+</head>
+
+<body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <div class="container">	
+        <div class="user-container">
+        </div>	
+        <script id="user-template" type="text/x-handlebars-template">
+            <img class="user-img" src="{{object.picture}}">    
+            <p class="user-content">{{object.firstName}} - {{object.lastName}}</p><br>
+            <p class="user-content">{{object.state}}, {{object.city}}</p>
+        </script>
+
+        <div class="quote-container">
+        </div>	
+        <script id="quote-template" type="text/x-handlebars-template">    
+            <p class="favorite">Favorite quote</p>
+            <p class="quote-content">{{this.text}}</p>      
+        </script>
+
+        <div class="content-container">	
+            <div class="pokemon-container">
+                
+            </div>	
+            <script id="pokemon-template" type="text/x-handlebars-template">
+                <img  srcset="{{object.picture}}">
+                <p class="pokemon-name">favorite pokemon: {{object.name}}</p>
+       </script>
+            <div class="about-container">
+
+            </div>	
+            <script id="about-template" type="text/x-handlebars-template">
+                <p>About Me</p>
+                 <p class="about-content">{{this.text}}</p>
+        </script>
+        </div>	
+        <div class="friends">	
+            <h4>Friends</h4>	
+            <div class="friends-container">	
+               
+            </div>	
+            <script id="friends-template" type="text/x-handlebars-template">
+                {{#each object}}
+                 <div class="friends-names">{{firstName}} {{lastName}}</div>
+                {{/each}}        
+                 
+             </script>
+        </div>	
+        <div class="generate-container">
+            <button id =generate-btn>generate User</button>
+        </div>	
+    </div>
+    <script src="src/dataClasses/Pokemon.js"></script>
+    <script src="src/dataClasses/User.js"></script>
+    <script src="src/dataClasses/PageData.js"></script>
+    <script src="src/view.js"></script>
+    <script src="src/model.js"></script>
+    <script src="src/main.js"></script>
+</body>
+
+</html>
