@@ -1,11 +1,11 @@
 "use strict";
 class PlayerStats {
-    constructor(teamName, stealsPerGame, threePointPercentege, GamePlayed, playerEfficiencyRating, namePlayer) {
-        this.teamName = teamName;
-        this.stealsPerGame = stealsPerGame;
-        this.threePointPercentege = threePointPercentege;
-        this.gamePlayed = GamePlayed;
-        this.playerEfficiencyRating = playerEfficiencyRating;
-        this.namePlayer = namePlayer;
+    constructor(teamName, stealsPerGame, threePointPercentege, gamePlayed, playerEfficiencyRating, playerName) {
+        this._teamName = teamName;
+        this._stealsPerGame = stealsPerGame;
+        this._threePointPercentege = threePointPercentege;
+        this._gamePlayed = gamePlayed;
+        this._playerEfficiencyRating = playerEfficiencyRating;
+        this._playerName = playerName;
     }
 }
