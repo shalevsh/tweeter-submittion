@@ -60,10 +60,10 @@ class Controller {
             return dreamTeam;
         });
     }
-    getPlayerStatus(player) {
+    getPlayerStats(player) {
         return __awaiter(this, void 0, void 0, function* () {
-            const playerStatus = yield this._model.GetPlayerStats(player);
-            return playerStatus;
+            const playerStats = yield this._model.GetPlayerStats(player);
+            return playerStats;
         });
     }
     findPlayerPush(thePlayer) {
@@ -120,8 +120,8 @@ class Controller {
         }));
         $('body').on('click', '#StatusPlayer', () => {
             const player = this.findPlayerPush($(this));
-            let playerStatusPromise = this.getPlayerStatus(player);
-            playerStatusPromise.then((value) => {
+            let playerStatsPromise = this.getPlayerStats(player);
+            playerStatsPromise.then((value) => {
                 this._view.RenderPlayerStats(value);
             });
         });

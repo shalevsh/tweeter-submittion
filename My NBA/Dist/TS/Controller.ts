@@ -44,9 +44,9 @@ private async getDreamTeam(): Promise<Player |Object>{
     const dreamTeam= await this._model.GetDreamTeam();
     return dreamTeam;
 }
-private async getPlayerStatus(player:Player):Promise<PlayerStats |Object>{
-    const playerStatus= await this._model.GetPlayerStats(player);
-    return playerStatus;
+private async getPlayerStats(player:Player):Promise<PlayerStats |Object>{
+    const playerStats= await this._model.GetPlayerStats(player);
+    return playerStats;
 }
 
 
@@ -112,8 +112,8 @@ private addListners(){
     
     $('body').on('click','#StatusPlayer',()=>{
         const player:Player = this.findPlayerPush($(this));   
-        let playerStatusPromise= this.getPlayerStatus(player)  
-        playerStatusPromise.then((value: any)=>{
+        let playerStatsPromise= this.getPlayerStats(player)  
+        playerStatsPromise.then((value: any)=>{
             this._view.RenderPlayerStats(value);
              
         })
