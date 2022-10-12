@@ -5,14 +5,7 @@ import uvicorn
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 import requests
-teams_id = {
-    "lakers": "1610612747",
-    "warriors": "1610612744",
-    "heat": "1610612748",
-    "suns": "1610612756"
-}
-
-
+from teams_id import teams_id
 def get_players(team_name, players_list):
     team_id = teams_id.get(team_name, 0)
     if not team_id:
@@ -36,6 +29,12 @@ def generate_player(player_data):
 
 
 app = FastAPI()
+app.mount("/Dist/src", StaticFiles(directory="./Dist/src"), name="src")
+
+
+@app.get("/")
+def on_load():
+    return FileResponse('src/index.html')
 
 
 @app.get("/players")

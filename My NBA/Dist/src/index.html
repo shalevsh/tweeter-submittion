@@ -1,73 +1,111 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.min.js"></script>
-    <title>API Project</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+   <link rel="stylesheet" type="text/css" href="/Dist/src/style.css">
+   <title>Document</title>
 </head>
-
 <body>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <div class="container">	
-        <div class="user-container">
-        </div>	
-        <script id="user-template" type="text/x-handlebars-template">
-            <img class="user-img" src="{{object.picture}}">    
-            <p class="user-content">{{object.firstName}} - {{object.lastName}}</p><br>
-            <p class="user-content">{{object.state}}, {{object.city}}</p>
-        </script>
-
-        <div class="quote-container">
-        </div>	
-        <script id="quote-template" type="text/x-handlebars-template">    
-            <p class="favorite">Favorite quote</p>
-            <p class="quote-content">{{this.text}}</p>      
-        </script>
-
-        <div class="content-container">	
-            <div class="pokemon-container">
-                
-            </div>	
-            <script id="pokemon-template" type="text/x-handlebars-template">
-                <img  srcset="{{object.picture}}">
-                <p class="pokemon-name">favorite pokemon: {{object.name}}</p>
-       </script>
-            <div class="about-container">
-
-            </div>	
-            <script id="about-template" type="text/x-handlebars-template">
-                <p>About Me</p>
-                 <p class="about-content">{{this.text}}</p>
-        </script>
-        </div>	
-        <div class="friends">	
-            <h4>Friends</h4>	
-            <div class="friends-container">	
-               
-            </div>	
-            <script id="friends-template" type="text/x-handlebars-template">
-                {{#each object}}
-                 <div class="friends-names">{{firstName}} {{lastName}}</div>
-                {{/each}}        
-                 
-             </script>
-        </div>	
-        <div class="generate-container">
-            <button id =generate-btn>generate User</button>
-        </div>	
+    <div class="input-group">
+        <input id="team-name" placeholder="Team name" type="text"  class="form-control">
+        <input id="year-player"  placeholder="year join" type="text"  class="form-control">
+        <button id="get-team" type="button" class="btn btn-primary btn-degin-team">Get Team</button>
+        <button id="get-dream-team" type="button" class="btn btn-dark btn-degin-Dreamteam">Get Dream Team</button>
     </div>
-    <script src="src/dataClasses/Pokemon.js"></script>
-    <script src="src/dataClasses/User.js"></script>
-    <script src="src/dataClasses/PageData.js"></script>
-    <script src="src/view.js"></script>
-    <script src="src/model.js"></script>
-    <script src="src/main.js"></script>
-</body>
+    <div class="birth-date input-group mb-3">
+        <div class="input-group-text">
+          <input id="birth-date" class="form-check-input mt-0" type="checkbox" value="" aria-label="Checkbox for following text input">
+          
+        </div>   
+        <h5 class="birth-date-discription">Has Birth Date</h5>     
+    </div>
+    <div class="container text-center">
+        <div id="stats-container" class="stats" class="row">
+                      
+            
+        </div> 
+        <div id="row-container" class="row row-cols-1 row-cols-md-3 g-4">
+                      
+            
+        </div>
+      
+     </div>
+     <p>      
+        <p id="project-id-select-error"></p>
+    </p>
 
+   
+    <script id="player-tamplate" type="text/x-handlebars-template">
+       {{#each results}}   
+        <div class="col">
+            <div class="card h-300">                    
+              <img id="image-Player" src="{{Image}}" alt="" onerror= "if (this.src != 'Sorry, that player was not found. Please check the spelling.') this.src = '/Dist/src/genericPlayer.jpg';" class="card-img-top image-max" >             
+              <div class="card-body">
+                <h2 class="card-firstName card-title">{{firstName}} </h2>
+                <h2 class="card-lastName card-title">{{lastName}} </h2>
+                <h2 class="card-jersy card-title">{{jerseyNumber}}</h2>
+                <h3 class="card-position card-text">{{position}}</h3>
+                <p class="card-hasBirthDate card-text" style="display: none;">{{birthDate}}</p>
+                <p class="card-DreamTeam card-text" style="display: none;">{{dreamTeam}}</p>
+                
+                <button  id="stats-player" type="button" class="btn btn-outline-success">Player Stats</button>
+                {{#if DreamTeam}}
+                    <button  id="delete-player" type="button" class="btn btn-outline-danger show-in-dreamteam" style="display:none;" >Delete Player</button>
+                    <button id="add-player" type="button" class="btn btn-outline-info hide-dream-team" style="display:none;">Add Player</button>
+                {{else}} 
+                    <button  id="delete-player" type="button" class="btn btn-outline-danger show-in-dreamteam" style="display:none;">Delete Player</button>
+                    <button id="add-player" type="button" class="btn btn-outline-info hide-dream-team" >Add Player</button>
+                    
+               
+                {{/if}}
+               
+               
+              </div>
+      
+            </div>
+             
+          </div> 
+          
+         
+       {{/each}} 
+        </script>    
+        <script id="player-stats-tamplate" type="text/x-handlebars-template">
+            <div class="card text-center">
+                <div class="card-header">
+                <b><h1>{{stats.namePlayer}}</h1></b>    
+                <b><h2> Stats of player</h2></b>
+                </div>               
+                <div class="card-body">
+                  <h3 class="card-title">TeamName</h3>
+                  <h5 class="card-text">{{stats.teamName}}</h5>
+                  <h3 class="card-title">Steals Per Game</h3>
+                  <h5 class="card-text">{{stats.stealsPerGame}}</h5>
+                  <h3 class="card-title">three Point Percentege</h3>
+                  <h5 class="card-text">{{stats.threePointPercentege}}</h5>
+                  <h3 class="card-title">Game Played</h3>
+                  <h5 class="card-text">{{stats.gamePlayed}}</h5>
+                  <h3 class="card-title">Player Efficiency Rating</h3>
+                  <h5 class="card-text">{{stats.playerEfficiencyRating}}</h5>
+                
+                </div>
+                
+              
+              </div>
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.js"></script>
+    <script src="Dist/JS/Player.js"></script>
+    <script src="Dist/JS/PlayerStats.js"></script>
+    <script src="Dist/JS/View.js"></script>
+    <script src="Dist/JS/Model.js"></script>
+    <script src="Dist/JS/Controller.js"></script>
+    <script src="Dist/JS/Main.js"></script>
+
+    <script id="player-tamplate" type="text/x-handlebars-template">    
+  </body>
 </html>

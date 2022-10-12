@@ -18,6 +18,46 @@ class Player{
         this._isDreamTeam=isDreamTeam;
         this._image=image;
     }
+    public get fullName() {
+        return `${this._firstName} ${this._lastName}`;
+    }
+    public get firstName() {
+        return this._firstName;
+    }
+    public get lastName() {
+        return this._lastName;
+    }
 
+    public get id() {
+        return this._id;
+    }
+
+    public get jerseyNumber() {
+        return this._jerseyNumber;
+    }
+
+    public get position() {
+        return this._position;
+    }
+
+    public get birthDate() {
+        return this._birthDate;
+    }
+
+    public get isDreamTeam() {
+        return this._isDreamTeam;
+    }
+    public get image() {
+        return this._image;
+    }
+
+    public set fullName(name: string) {
+        let parts = name.split(' ');
+        if (parts.length != 2) {
+            throw new Error('Invalid name format: first last');
+        }
+        this._firstName = parts[0];
+        this._lastName = parts[1];
+    }
 
 }
