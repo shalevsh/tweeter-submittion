@@ -19,7 +19,7 @@ class Player{
         this._image=image;
     }
     public get fullName() {
-        return `${this._firstName} ${this._lastName}`;
+        return `${this._firstName}${this._lastName}`;
     }
     public get firstName() {
         return this._firstName;
@@ -49,15 +49,6 @@ class Player{
     }
     public get image() {
         return this._image;
-    }
-
-    public set fullName(name: string) {
-        let parts = name.split(' ');
-        if (parts.length != 2) {
-            throw new Error('Invalid name format: first last');
-        }
-        this._firstName = parts[0];
-        this._lastName = parts[1];
     }
 
 }

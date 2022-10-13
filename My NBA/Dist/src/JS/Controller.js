@@ -72,7 +72,7 @@ function findPlayerPush(thePlayer) {
     const dreamTeam = $(thePlayer).closest(".card-body").find(".card-dream-team").text();
     const image = $(thePlayer).closest(".card").find("#image-Player").prop('src');
     const dreamTeamIn = dreamTeam === 'true';
-    const player = new Player(firstName + lastName, firstName, lastName, jersyNumber, position, birthDate, dreamTeamIn, image);
+    const player = new Player(`${firstName}${lastName}`, firstName, lastName, jersyNumber, position, birthDate, dreamTeamIn, image);
     return player;
 }
 function addListners() {
