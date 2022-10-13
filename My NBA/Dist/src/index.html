@@ -20,26 +20,17 @@
     <div class="birth-date input-group mb-3">
         <div class="input-group-text">
           <input id="birth-date" class="form-check-input mt-0" type="checkbox" value="" aria-label="Checkbox for following text input">
-          
         </div>   
         <h5 class="birth-date-discription">Has Birth Date</h5>     
     </div>
     <div class="container text-center">
-        <div id="stats-container" class="stats" class="row">
-                      
-            
-        </div> 
-        <div id="row-container" class="row row-cols-1 row-cols-md-3 g-4">
-                      
-            
-        </div>
-      
+        <div id="stats-container" class="stats" class="row"> </div> 
+        <div id="row-container" class="row row-cols-1 row-cols-md-3 g-4"></div>
      </div>
      <p>      
         <p id="project-id-select-error"></p>
     </p>
 
-   
     <script id="player-tamplate" type="text/x-handlebars-template">
        {{#each results}}   
         <div class="col">
@@ -52,7 +43,6 @@
                 <h3 class="card-position card-text">{{position}}</h3>
                 <p class="card-hasBirthDate card-text" style="display: none;">{{birthDate}}</p>
                 <p class="card-DreamTeam card-text" style="display: none;">{{dreamTeam}}</p>
-                
                 <button  id="stats-player" type="button" class="btn btn-outline-success">Player Stats</button>
                 {{#if DreamTeam}}
                     <button  id="delete-player" type="button" class="btn btn-outline-danger show-in-dreamteam" style="display:none;" >Delete Player</button>
@@ -60,18 +50,11 @@
                 {{else}} 
                     <button  id="delete-player" type="button" class="btn btn-outline-danger show-in-dreamteam" style="display:none;">Delete Player</button>
                     <button id="add-player" type="button" class="btn btn-outline-info hide-dream-team" >Add Player</button>
-                    
-               
                 {{/if}}
-               
-               
               </div>
-      
             </div>
-             
           </div> 
           
-         
        {{/each}} 
         </script>    
         <script id="player-stats-tamplate" type="text/x-handlebars-template">
@@ -91,21 +74,17 @@
                   <h5 class="card-text">{{stats.gamePlayed}}</h5>
                   <h3 class="card-title">Player Efficiency Rating</h3>
                   <h5 class="card-text">{{stats.playerEfficiencyRating}}</h5>
-                
                 </div>
-                
-              
               </div>
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.js"></script>
-    <script src="Dist/JS/Player.js"></script>
-    <script src="Dist/JS/PlayerStats.js"></script>
-    <script src="Dist/JS/View.js"></script>
-    <script src="Dist/JS/Model.js"></script>
-    <script src="Dist/JS/Controller.js"></script>
-    <script src="Dist/JS/Main.js"></script>
-
+    <script src="Dist/src/JS/Player.js"></script>
+    <script src="Dist/src/JS/PlayerStats.js"></script>
+    <script src="Dist/src/JS/View.js"></script>
+    <script src="Dist/src/JS/Model.js"></script>
+    <script src="Dist/src/JS/Controller.js"></script>
+    <script src="Dist/src/JS/Main.js"></script>
     <script id="player-tamplate" type="text/x-handlebars-template">    
   </body>
 </html>

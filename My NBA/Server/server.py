@@ -1,12 +1,19 @@
 from distutils.log import error
 import json
-from fastapi import FastAPI, status, HTTPException
+from fastapi import FastAPI, status, HTTPException, Request
 import uvicorn
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 import requests
 from teams_id import teams_id
 from dream_team import dream_team
+from pathlib import Path
+
+current_file = Path(__file__)
+current_file_dir = current_file.parent
+project_root = current_file_dir.parent
+project_root_absolute = project_root.resolve()
+root_absolute = project_root_absolute / "Dist/src"
 
 
 def get_players(team_name, players_list):
@@ -54,12 +61,12 @@ def init_dream_player(player):
 
 
 app = FastAPI()
-app.mount("/Dist/src", StaticFiles(directory="./Dist/src"), name="src")
+app.mount("/Dist/src", StaticFiles(directory=root_absolute), name="src")
 
 
 @app.get("/")
 def on_load():
-    return FileResponse('src/index.html')
+    return FileResponse('./Dist/src/index.html')
 
 
 @app.get("/players", status_code=status.HTTP_200_OK)
@@ -67,7 +74,6 @@ def get_team_players(team_name, year):
     tems_id = teams_id.get(team_name)
     if (tems_id == None):
         raise HTTPException(status_code=404, detail="the team dosent excit")
-
     players_list = get_leauge_players(year)
     team_players = get_players(team_name, players_list)
     return json.dumps(team_players)
@@ -85,9 +91,11 @@ async def add_player_dream(request: Request):
 @app.delete('/player/{player_id}', status_code=status.HTTP_200_OK)
 async def delete_player(player_id):
     global dream_team
-    dream_list = [item for item in dream_team if item.get('id').replace(" ", "") != player_id.replace(" ", "")]
+    dream_list = [item for item in dream_team if item.get(
+        'id').replace(" ", "") != player_id.replace(" ", "")]
     dream_team = dream_list
     return {"ok": True}
+
 
 @app.get('/playersDream/', status_code=status.HTTP_200_OK)
 async def get_players_dream():
