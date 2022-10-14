@@ -10,10 +10,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 const model = new Model();
 const view = new View();
+addListners();
 function getPlayers(year, teamMate) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            console.log(self, "get player this");
             const players = yield model.GetPlayers(year, teamMate);
             if (!Array.isArray(players)) {
                 view.RenderEmptyPlayers();
@@ -76,11 +76,14 @@ function findPlayerPush(thePlayer) {
     return player;
 }
 function addListners() {
+    $("#birth-date").prop("disabled", true);
+    $("#get-team").prop("disabled", true);
+    $("#get-dream-team").prop("disabled", true);
     $('#get-team').on('click', function () {
         getPlayerByTeamAndYear(getPlayers);
     });
-    $('#HasBirthDate').on('click', () => {
-        const checkbox = document.getElementById('HasBirthDate');
+    $('#birth-date').on('click', () => {
+        const checkbox = document.getElementById('birth-date');
         if (checkbox === null || checkbox === void 0 ? void 0 : checkbox.checked) {
             getPlayerByTeamAndYear(filterHasBirthDatePlayers);
         }
@@ -88,14 +91,14 @@ function addListners() {
             getPlayerByTeamAndYear(getPlayers);
         }
     });
-    $('body').on('click', '#AddPlayer', function () {
+    $('body').on('click', '#add-player', function () {
         const player = findPlayerPush($(this));
         let playerNewPromise = addPlayer(player);
         playerNewPromise.then(() => {
             $(this).hide();
         });
     });
-    $('body').on('click', '#DeletePlayer', function () {
+    $('body').on('click', '#delete-player', function () {
         const player = findPlayerPush($(this));
         let playerNewPromise = this.deletePlayer(player);
         playerNewPromise.then(() => {
@@ -115,11 +118,14 @@ function addListners() {
             $('.show-in-dreamteam').show();
         });
     }));
-    $('body').on('click', '#StatusPlayer', function () {
+    $('body').on('click', '#stats-player', function () {
         const player = this.findPlayerPush($(this));
         let playerStatsPromise = this.getPlayerStats(player);
         playerStatsPromise.then((value) => {
             view.RenderPlayerStats(value);
         });
+    });
+    $('#team-name').on("blur", function () {
+        $("#get-team").prop("disabled", false);
     });
 }

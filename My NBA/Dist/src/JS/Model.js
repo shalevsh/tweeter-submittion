@@ -59,15 +59,16 @@ class Model {
             return playersHasBirth;
         });
     }
-    createPlayers(getPlayers) {
+    createPlayers(playersArr) {
         return __awaiter(this, void 0, void 0, function* () {
             const players = [];
-            for (let i = 0; i < getPlayers.length; i++) {
-                getPlayers[i].forEach((element) => {
-                    let image = `https://nba-players.herokuapp.com/players/${element.lastName}/${element.firstName}`;
-                    players.push(new Player(element.fullName, element.firstName, element.lastName, element.jersey, element.pos, element.dateOfBirthUTC, false, image));
-                });
-            }
+            playersArr.forEach((element) => {
+                const nameArr = element.name.split(' ');
+                const firstName = nameArr[0];
+                const lastName = nameArr[1];
+                let image = `https://nba-players.herokuapp.com/players/${lastName}/${firstName}`;
+                players.push(new Player(element.name, firstName, lastName, element.jersey, element.pos, element.dateOfBirthUTC, false, image));
+            });
             return players;
         });
     }

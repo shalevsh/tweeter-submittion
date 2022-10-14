@@ -13,6 +13,9 @@ class View {
         const template = Handlebars.compile(source);
         const newHtml = template({ results: players });
         $('#row-container').append(newHtml);
+        $("#floating-square").hide();
+        $("#birth-date").prop("disabled", false);
+        $("#get-dream-team").prop("disabled", false);
     }
     RenderPlayerStats(playerStats) {
         this.RenderEmptyStatsPlayer();

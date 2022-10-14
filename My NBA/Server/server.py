@@ -16,21 +16,20 @@ project_root_absolute = project_root.resolve()
 root_absolute = project_root_absolute / "Dist/src"
 
 
-def get_players(team_name, players_list):
-    team_id = teams_id.get(team_name, 0)
-    if not team_id:
-        raise error
+def get_players(team_id, players_list):
+    players_list = list(
+        filter(lambda player: player["teamId"] == team_id, players_list))
     return players_list
 
 
-def get_leauge_players(year):
+def get_leauge_players(year, team_id):
     res = requests.get(f'http://data.nba.net/10s/prod/v1/{year}/players.json')
     if (res.status_code == 200):
         data_list = res.json()["league"]["standard"]
+        players_list = get_players(team_id, data_list)
         players_list = [generate_player(player_data)
-                        for player_data in data_list]
+                        for player_data in players_list]
         return players_list
-
     else:
         raise HTTPException(status_code=404, detail="erorr in api")
 
@@ -44,8 +43,7 @@ def generate_player(player_data):
 
 
 def init_dream_player(player):
-    id_player = (
-        f'{player["player"]["firstName"]} {player["player"]["lastName"]}').replace(" ", "")
+    id_player = (f'{player["player"]["firstName"]}{player["player"]["lastName"]}')
     player_dream = player["player"]
     dream_player = {
         "id": id_player,
@@ -59,7 +57,6 @@ def init_dream_player(player):
     }
     return dream_player
 
-
 app = FastAPI()
 app.mount("/Dist/src", StaticFiles(directory=root_absolute), name="src")
 
@@ -71,12 +68,11 @@ def on_load():
 
 @app.get("/players", status_code=status.HTTP_200_OK)
 def get_team_players(team_name, year):
-    tems_id = teams_id.get(team_name)
-    if (tems_id == None):
+    team_id = teams_id.get(team_name)
+    if (team_id == None):
         raise HTTPException(status_code=404, detail="the team dosent excit")
-    players_list = get_leauge_players(year)
-    team_players = get_players(team_name, players_list)
-    return json.dumps(team_players)
+    players_list = get_leauge_players(year, team_id)
+    return json.dumps(players_list)
 
 
 @app.post('/player/', status_code=status.HTTP_201_CREATED)

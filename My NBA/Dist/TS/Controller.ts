@@ -1,10 +1,9 @@
 const model : Model =new Model();
 const view: View = new View();
-
+addListners();
 
  async function getPlayers(year:String,teamMate:String) {
     try{       
-        console.log(self,"get player this")
         const players= await model.GetPlayers(year,teamMate); 
         if(!Array.isArray(players)){
             view.RenderEmptyPlayers();
@@ -62,12 +61,16 @@ const view: View = new View();
 }
 
 function addListners(){
+    $("#birth-date").prop( "disabled", true );
+    $("#get-team").prop( "disabled", true );
+    $("#get-dream-team").prop( "disabled", true );
+
     $('#get-team').on('click',function(){
         getPlayerByTeamAndYear(getPlayers);
     })
 
-    $('#HasBirthDate').on('click',()=>{
-        const checkbox = document.getElementById('HasBirthDate',) as HTMLInputElement | null;
+    $('#birth-date').on('click',()=>{
+        const checkbox = document.getElementById('birth-date',) as HTMLInputElement | null;
           if (checkbox?.checked) {
             getPlayerByTeamAndYear(filterHasBirthDatePlayers);    
           }else{
@@ -75,7 +78,7 @@ function addListners(){
           }  
     })
 
-    $('body').on('click','#AddPlayer',function(){       
+    $('body').on('click','#add-player',function(){       
         const player:Player = findPlayerPush($(this))
         let playerNewPromise = addPlayer(player)  
         playerNewPromise.then(()=>{        
@@ -83,7 +86,7 @@ function addListners(){
         })
     })
     
-    $('body').on('click','#DeletePlayer',function(){
+    $('body').on('click','#delete-player',function(){
        const player:Player = findPlayerPush($(this));
        let playerNewPromise = this.deletePlayer(player)  
        playerNewPromise.then(()=>{ 
@@ -107,7 +110,7 @@ function addListners(){
         })
     }))    
     
-    $('body').on('click','#StatusPlayer',function(){
+    $('body').on('click','#stats-player',function(){
         const player:Player = this.findPlayerPush($(this));   
         let playerStatsPromise= this.getPlayerStats(player)  
         playerStatsPromise.then((value: any)=>{
@@ -116,5 +119,8 @@ function addListners(){
         })
     
     })
-}
+    $('#team-name').on("blur",function(){
+        $("#get-team").prop( "disabled", false );
+    });
 
+}
