@@ -50,7 +50,7 @@ class Model{
     }
 
     
-    async createPlayers(playersArr:any):Promise<Player[]>{
+    private async createPlayers(playersArr:any):Promise<Player[]>{
         const players:Player[]=[];   
             playersArr.forEach((element:any) => {    
                 const nameArr:String = element.name.split(' ');    
@@ -64,7 +64,7 @@ class Model{
     }
 
 
-    async createPlayerDreamTeam(players:Player[]):Promise<Player[]>{
+    private async createPlayerDreamTeam(players:Player[]):Promise<Player[]>{
         const playersArr:Player[]=[];   
         players.forEach((player:Player) => {
             let image:String=`https://nba-players.herokuapp.com/players/${player.lastName}/${player.firstName}`
@@ -74,7 +74,7 @@ class Model{
     }
 
     
-    async addPlayerToDreamTeam(player:Player):Promise<Player | Object> {                                 
+    public async AddPlayerToDreamTeam(player:Player):Promise<Player | Object> {                                 
         let newPlayerResponse: string;   
         try{
             newPlayerResponse= await $.post({
@@ -119,8 +119,8 @@ class Model{
 
     public async GetPlayerStats(player:Player):Promise<PlayerStats|Object> {                                 
         try{  
-            const getPlayerStats =`https://nba-players.herokuapp.com/players-stats/${player.lastName}/${player.firstName}`;
-            const data= await $.get(getPlayerStats)
+            const playerStatsUrl =`https://nba-players.herokuapp.com/players-stats/${player.lastName}/${player.firstName}`.replace(" ","").trim();
+            const data= await $.get(playerStatsUrl)
             return new PlayerStats(data["name"],data["team_name"],data["steals_per_game"],data["three_point_percentage"],data["games_played"],data["player_efficiency_rating"]);             
         } catch(err){
             return {err:err}

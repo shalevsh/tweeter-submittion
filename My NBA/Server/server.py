@@ -1,61 +1,17 @@
-from distutils.log import error
 import json
 from fastapi import FastAPI, status, HTTPException, Request
 import uvicorn
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
-import requests
 from teams_id import teams_id
 from dream_team import dream_team
 from pathlib import Path
-
+import functions
 current_file = Path(__file__)
 current_file_dir = current_file.parent
 project_root = current_file_dir.parent
 project_root_absolute = project_root.resolve()
 root_absolute = project_root_absolute / "Dist/src"
-
-
-def get_players(team_id, players_list):
-    players_list = list(
-        filter(lambda player: player["teamId"] == team_id, players_list))
-    return players_list
-
-
-def get_leauge_players(year, team_id):
-    res = requests.get(f'http://data.nba.net/10s/prod/v1/{year}/players.json')
-    if (res.status_code == 200):
-        data_list = res.json()["league"]["standard"]
-        players_list = get_players(team_id, data_list)
-        players_list = [generate_player(player_data)
-                        for player_data in players_list]
-        return players_list
-    else:
-        raise HTTPException(status_code=404, detail="erorr in api")
-
-
-def generate_player(player_data):
-    return {
-        "name": f"{player_data.get('firstName')} {player_data.get('lastName')}",
-        "pos": player_data.get("pos"),
-        "jersey": player_data.get("jersey")
-    }
-
-
-def init_dream_player(player):
-    id_player = (f'{player["player"]["firstName"]}{player["player"]["lastName"]}')
-    player_dream = player["player"]
-    dream_player = {
-        "id": id_player,
-        "firstName": player_dream["firstName"],
-        "lastName": player_dream["lastName"],
-        "jerseyNumber": player_dream["jerseyNumber"],
-        "position": player_dream["position"],
-        "hasBirthDate": player_dream["hasBirthDate"],
-        "dreamTeam": player_dream["dreamTeam"],
-        "image": player_dream["image"]
-    }
-    return dream_player
 
 app = FastAPI()
 app.mount("/Dist/src", StaticFiles(directory=root_absolute), name="src")
@@ -71,14 +27,14 @@ def get_team_players(team_name, year):
     team_id = teams_id.get(team_name)
     if (team_id == None):
         raise HTTPException(status_code=404, detail="the team dosent excit")
-    players_list = get_leauge_players(year, team_id)
+    players_list = functions.get_leauge_players(year, team_id)
     return json.dumps(players_list)
 
 
 @app.post('/player/', status_code=status.HTTP_201_CREATED)
 async def add_player_dream(request: Request):
     respone = await request.json()
-    player = init_dream_player(respone)
+    player = functions.init_dream_player(respone)
     dream_team.append(player)
     new_player = json.dumps(player)
     return new_player
@@ -98,4 +54,4 @@ async def get_players_dream():
     return json.dumps(dream_team)
 
 if __name__ == "__main__":
-    uvicorn.run("server:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("server:app", host="0.0.0.0", port=8080, reload=True)

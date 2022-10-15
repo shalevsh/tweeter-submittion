@@ -82,7 +82,7 @@ class Model {
             return playersArr;
         });
     }
-    addPlayerToDreamTeam(player) {
+    AddPlayerToDreamTeam(player) {
         return __awaiter(this, void 0, void 0, function* () {
             let newPlayerResponse;
             try {
@@ -126,8 +126,8 @@ class Model {
     GetPlayerStats(player) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const getPlayerStats = `https://nba-players.herokuapp.com/players-stats/${player.lastName}/${player.firstName}`;
-                const data = yield $.get(getPlayerStats);
+                const playerStatsUrl = `https://nba-players.herokuapp.com/players-stats/${player.lastName}/${player.firstName}`.replace(" ", "").trim();
+                const data = yield $.get(playerStatsUrl);
                 return new PlayerStats(data["name"], data["team_name"], data["steals_per_game"], data["three_point_percentage"], data["games_played"], data["player_efficiency_rating"]);
             }
             catch (err) {

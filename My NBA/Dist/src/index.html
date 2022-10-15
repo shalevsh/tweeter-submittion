@@ -21,8 +21,8 @@
     <h8 class="birth-date-discription">Birth date</h8>     
     <input id="birth-date" class="" type="checkbox" value="true" aria-label="Checkbox for following text input">
     <div class="container text-center">
-        <div id="stats-container" class="stats" class="row"> </div> 
-        <div id="row-container" class="row row-cols-1 row-cols-md-3 g-4"></div>
+      <div id="stats-container" class="stats" class="row"> </div> 
+      <div id="row-container" class="row row-cols-1 row-cols-md-3 g-4"></div>
      </div>
      <p>      
         <p id="project-id-select-error"></p>
@@ -38,11 +38,11 @@
             <div class="card h-300">                    
               <img id="image-player" src="{{image}}" alt="" onerror= "if (this.src != 'Sorry, that player was not found. Please check the spelling.') this.src = '/Dist/src/genericPlayer.jpg';" class="card-img-top image-max" >             
               <div class="card-body">
-                <h2 class="card-firstName card-title">{{firstName}} </h2>
-                <h2 class="card-lastName card-title">{{lastName}} </h2>
+                <h2 class="card-first-name card-title">{{firstName}} </h2>
+                <h2 class="card-last-name card-title">{{lastName}} </h2>
                 <h2 class="card-jersy card-title">{{jerseyNumber}}</h2>
                 <h3 class="card-position card-text">{{position}}</h3>
-                <p class="card-has-birth-date card-text" style="display: none;">{{birthDate}}</p>
+                <p class="card-birth-date card-text" style="display: none;">{{birthDate}}</p>
                 <p class="card-dream-team card-text" style="display: none;">{{dreamTeam}}</p>
                 <button  id="stats-player" type="button" class="btn btn-outline-success">Player Stats</button>
                 {{#if dreamTeam}}
@@ -57,11 +57,12 @@
           </div> 
           
        {{/each}} 
+       <div id="stats-container" class="stats" class="row"> </div> 
         </script>    
         <script id="player-stats-tamplate" type="text/x-handlebars-template">
             <div class="card text-center">
                 <div class="card-header">
-                <b><h1>{{stats.namePlayer}}</h1></b>    
+                <b><h1>{{stats.playerName}}</h1></b>    
                 <b><h2> Stats of player</h2></b>
                 </div>               
                 <div class="card-body">
@@ -75,7 +76,7 @@
                   <h5 class="card-text">{{stats.gamePlayed}}</h5>
                   <h3 class="card-title">Player Efficiency Rating</h3>
                   <h5 class="card-text">{{stats.playerEfficiencyRating}}</h5>
-                </div>
+               </div>
               </div>
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>

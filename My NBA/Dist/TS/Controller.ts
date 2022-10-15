@@ -28,7 +28,7 @@ addListners();
 
 
  async function addPlayer(player:Player):Promise<Player |Object>{
-    const newPlayer= await model.addPlayerToDreamTeam(player);
+    const newPlayer= await model.AddPlayerToDreamTeam(player);
     return newPlayer;
 }
  async function deletePlayer(player:Player):Promise<Player |Object>{
@@ -50,11 +50,10 @@ addListners();
     const lastName= $(playerCardElement).closest(".card-body").find(".card-last-name").text()
     const jersyNumber= $(playerCardElement).closest(".card-body").find(".card-jersy").text()
     const position= $(playerCardElement).closest(".card-body").find(".card-position").text()   
-    const birthDate= $(playerCardElement).closest(".card-body").find(".card-birth-date").text()
     const dreamTeam= $(playerCardElement).closest(".card-body").find(".card-dream-team").text()
     const image= $(playerCardElement).closest(".card").find("#image-player").prop('src')
     const dreamTeamIn = dreamTeam === 'true';
-    const player:Player = new Player(`${firstName}${lastName}`,firstName,lastName,jersyNumber,position,birthDate,dreamTeamIn,image);
+    const player:Player = new Player(`${firstName}${lastName}`,firstName,lastName,jersyNumber,position,"",dreamTeamIn,image);
     return player;   
 }
 
@@ -97,7 +96,7 @@ function addListners(){
         })
     })
     
-    $('#dream-team-get').on('click',(function(){
+    $('#get-dream-team').on('click',(function(){
         let playerNewPromise = getDreamTeam()    
         playerNewPromise.then((value)=>{   
             view.RenderPlayers(value)
@@ -109,13 +108,13 @@ function addListners(){
     }))    
     
     $('body').on('click','#stats-player',function(){
+        window.scrollTo(0,0);
         const player:Player = getPlayerDetailsFromCardHtml($(this));   
         let playerStatsPromise= getPlayerStats(player)  
         playerStatsPromise.then((value: any)=>{
-            view.RenderPlayerStats(value);
-             
+            view.RenderPlayerStats(value);            
         })
-    
+       
     })
     $('#team-name').on("blur",function(){
         $("#get-team").prop( "disabled", false );

@@ -44,7 +44,7 @@ body{
 }
 @keyframes ball {
     0%   {left:85%; top:0%;}
-    50%  {left:85%; top:100%;}
+    50%  {left:85%; top:75%;}
     100%  {left:85%; top:0%;}
   }
 
