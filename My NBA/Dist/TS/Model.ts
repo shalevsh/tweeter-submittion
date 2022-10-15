@@ -40,7 +40,7 @@ class Model{
     }
 
 
-    public async FilterHasBirthDatePlayers(year:String,teamMate:String):Promise<Player[] | Object>{     
+    public async FilterBirthDatePlayers(year:String,teamMate:String):Promise<Player[] | Object>{     
         const playersFilter:Player[] | Object=await this.GetPlayers(year,teamMate);
         let playersHasBirth:Player[]=[]
         if(Array.isArray(playersFilter)){
@@ -74,7 +74,7 @@ class Model{
     }
 
     
-    async addPlayerTeam(player:Player):Promise<Player | Object> {                                 
+    async addPlayerToDreamTeam(player:Player):Promise<Player | Object> {                                 
         let newPlayerResponse: string;   
         try{
             newPlayerResponse= await $.post({
@@ -121,7 +121,7 @@ class Model{
         try{  
             const getPlayerStats =`https://nba-players.herokuapp.com/players-stats/${player.lastName}/${player.firstName}`;
             const data= await $.get(getPlayerStats)
-            return new PlayerStats(data["team_name"],data["steals_per_game"],data["three_point_percentage"],data["games_played"],data["player_efficiency_rating"],data["name"]);             
+            return new PlayerStats(data["name"],data["team_name"],data["steals_per_game"],data["three_point_percentage"],data["games_played"],data["player_efficiency_rating"]);             
         } catch(err){
             return {err:err}
         }     

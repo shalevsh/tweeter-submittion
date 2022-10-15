@@ -18,11 +18,8 @@
     </div>
     <button id="get-team" type="button" class="btn btn-primary btn-degin-team"> Team</button>
     <button id="get-dream-team" type="button" class="btn btn-dark btn-degin-Dreamteam"> Dream Team</button>
-    <div class="birth-date input-group mb-3">
-          <input id="birth-date" class="" type="checkbox" value="true" aria-label="Checkbox for following text input">
-        
-        <h5 class="birth-date-discription">Birth Date</h5>     
-    </div>
+    <h8 class="birth-date-discription">Birth date</h8>     
+    <input id="birth-date" class="" type="checkbox" value="true" aria-label="Checkbox for following text input">
     <div class="container text-center">
         <div id="stats-container" class="stats" class="row"> </div> 
         <div id="row-container" class="row row-cols-1 row-cols-md-3 g-4"></div>
@@ -39,7 +36,7 @@
        {{#each results}}   
         <div class="col">
             <div class="card h-300">                    
-              <img id="image-Player" src="{{image}}" alt="" onerror= "if (this.src != 'Sorry, that player was not found. Please check the spelling.') this.src = '/Dist/src/genericPlayer.jpg';" class="card-img-top image-max" >             
+              <img id="image-player" src="{{image}}" alt="" onerror= "if (this.src != 'Sorry, that player was not found. Please check the spelling.') this.src = '/Dist/src/genericPlayer.jpg';" class="card-img-top image-max" >             
               <div class="card-body">
                 <h2 class="card-firstName card-title">{{firstName}} </h2>
                 <h2 class="card-lastName card-title">{{lastName}} </h2>

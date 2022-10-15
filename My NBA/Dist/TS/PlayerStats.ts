@@ -8,12 +8,34 @@ private _playerEfficiencyRating:String
 
 
 
-constructor(teamName:String,stealsPerGame:String,threePointPercentege:String,gamePlayed:String,playerEfficiencyRating:String,playerName:String){
+constructor(playerName:String,teamName:String,stealsPerGame:String,threePointPercentege:String,gamePlayed:String,playerEfficiencyRating:String){
+    this._playerName=playerName;
     this._teamName = teamName;
     this._stealsPerGame = stealsPerGame;
     this._threePointPercentege=threePointPercentege;
     this._gamePlayed=gamePlayed;
     this._playerEfficiencyRating=playerEfficiencyRating;
-    this._playerName=playerName;
+}
+public get teamName() {
+    return this._teamName;
+}
+public get stealsPerGame() {
+    return this._stealsPerGame;
+}
+
+public get threePointPercentege() {
+    return this._threePointPercentege;
+}
+
+public get gamePlayed() {
+    return this._gamePlayed;
+}
+
+public get playerEfficiencyRating() {
+    return this._playerEfficiencyRating;
+}
+
+public get playerName() {
+    return this._playerName;
 }
 }

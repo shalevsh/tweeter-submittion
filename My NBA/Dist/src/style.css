@@ -94,3 +94,17 @@ body{
     color: white;
 }
 
+.bounce:hover {
+    animation-name: bounce;
+    animation-timing-function: ease;
+}
+@keyframes bounce {
+  0%   { transform: translateY(0); }
+  100%  { transform: translateY(-50px); }
+}
+.card:hover{
+animation-name: bounce;    
+animation-duration: 1s;
+animation-fill-mode: forwards;
+
+}

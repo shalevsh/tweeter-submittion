@@ -16,7 +16,6 @@ function getPlayers(year, teamMate) {
         try {
             const players = yield model.GetPlayers(year, teamMate);
             if (!Array.isArray(players)) {
-                view.RenderEmptyPlayers();
                 $("#project-id-select-error").html("there is an error in your team or year").addClass("error-msg");
             }
             else {
@@ -28,9 +27,9 @@ function getPlayers(year, teamMate) {
         }
     });
 }
-function filterHasBirthDatePlayers(year, teamMate) {
+function filterBirthDatePlayers(year, teamMate) {
     return __awaiter(this, void 0, void 0, function* () {
-        const players = yield model.FilterHasBirthDatePlayers(year, teamMate);
+        const players = yield model.FilterBirthDatePlayers(year, teamMate);
         view.RenderPlayers(players);
     });
 }
@@ -41,7 +40,7 @@ function getPlayerByTeamAndYear(callback) {
 }
 function addPlayer(player) {
     return __awaiter(this, void 0, void 0, function* () {
-        const newPlayer = yield model.addPlayerTeam(player);
+        const newPlayer = yield model.addPlayerToDreamTeam(player);
         return newPlayer;
     });
 }
@@ -63,14 +62,14 @@ function getPlayerStats(player) {
         return playerStats;
     });
 }
-function findPlayerPush(thePlayer) {
-    const firstName = $(thePlayer).closest(".card-body").find(".card-first-name").text();
-    const lastName = $(thePlayer).closest(".card-body").find(".card-last-name").text();
-    const jersyNumber = $(thePlayer).closest(".card-body").find(".card-jersy").text();
-    const position = $(thePlayer).closest(".card-body").find(".card-position").text();
-    const birthDate = $(thePlayer).closest(".card-body").find(".card-birth-date").text();
-    const dreamTeam = $(thePlayer).closest(".card-body").find(".card-dream-team").text();
-    const image = $(thePlayer).closest(".card").find("#image-Player").prop('src');
+function getPlayerDetailsFromCardHtml(playerCardElement) {
+    const firstName = $(playerCardElement).closest(".card-body").find(".card-first-name").text();
+    const lastName = $(playerCardElement).closest(".card-body").find(".card-last-name").text();
+    const jersyNumber = $(playerCardElement).closest(".card-body").find(".card-jersy").text();
+    const position = $(playerCardElement).closest(".card-body").find(".card-position").text();
+    const birthDate = $(playerCardElement).closest(".card-body").find(".card-birth-date").text();
+    const dreamTeam = $(playerCardElement).closest(".card-body").find(".card-dream-team").text();
+    const image = $(playerCardElement).closest(".card").find("#image-player").prop('src');
     const dreamTeamIn = dreamTeam === 'true';
     const player = new Player(`${firstName}${lastName}`, firstName, lastName, jersyNumber, position, birthDate, dreamTeamIn, image);
     return player;
@@ -85,26 +84,26 @@ function addListners() {
     $('#birth-date').on('click', () => {
         const checkbox = document.getElementById('birth-date');
         if (checkbox === null || checkbox === void 0 ? void 0 : checkbox.checked) {
-            getPlayerByTeamAndYear(filterHasBirthDatePlayers);
+            getPlayerByTeamAndYear(filterBirthDatePlayers);
         }
         else {
             getPlayerByTeamAndYear(getPlayers);
         }
     });
     $('body').on('click', '#add-player', function () {
-        const player = findPlayerPush($(this));
+        const player = getPlayerDetailsFromCardHtml($(this));
         let playerNewPromise = addPlayer(player);
         playerNewPromise.then(() => {
             $(this).hide();
         });
     });
     $('body').on('click', '#delete-player', function () {
-        const player = findPlayerPush($(this));
+        const player = getPlayerDetailsFromCardHtml($(this));
         let playerNewPromise = this.deletePlayer(player);
         playerNewPromise.then(() => {
             let playerNewPromise = this.getDreamTeam();
             playerNewPromise.then((value) => {
-                this._view.RenderPlayers(value);
+                this.view.RenderPlayers(value);
                 $('.btn-outline-danger').show();
             });
         });
@@ -119,8 +118,8 @@ function addListners() {
         });
     }));
     $('body').on('click', '#stats-player', function () {
-        const player = this.findPlayerPush($(this));
-        let playerStatsPromise = this.getPlayerStats(player);
+        const player = getPlayerDetailsFromCardHtml($(this));
+        let playerStatsPromise = getPlayerStats(player);
         playerStatsPromise.then((value) => {
             view.RenderPlayerStats(value);
         });

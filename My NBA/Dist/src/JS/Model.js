@@ -49,7 +49,7 @@ class Model {
             }
         });
     }
-    FilterHasBirthDatePlayers(year, teamMate) {
+    FilterBirthDatePlayers(year, teamMate) {
         return __awaiter(this, void 0, void 0, function* () {
             const playersFilter = yield this.GetPlayers(year, teamMate);
             let playersHasBirth = [];
@@ -82,7 +82,7 @@ class Model {
             return playersArr;
         });
     }
-    addPlayerTeam(player) {
+    addPlayerToDreamTeam(player) {
         return __awaiter(this, void 0, void 0, function* () {
             let newPlayerResponse;
             try {
@@ -128,7 +128,7 @@ class Model {
             try {
                 const getPlayerStats = `https://nba-players.herokuapp.com/players-stats/${player.lastName}/${player.firstName}`;
                 const data = yield $.get(getPlayerStats);
-                return new PlayerStats(data["team_name"], data["steals_per_game"], data["three_point_percentage"], data["games_played"], data["player_efficiency_rating"], data["name"]);
+                return new PlayerStats(data["name"], data["team_name"], data["steals_per_game"], data["three_point_percentage"], data["games_played"], data["player_efficiency_rating"]);
             }
             catch (err) {
                 return { err: err };

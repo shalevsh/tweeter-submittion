@@ -6,7 +6,6 @@ addListners();
     try{       
         const players= await model.GetPlayers(year,teamMate); 
         if(!Array.isArray(players)){
-            view.RenderEmptyPlayers();
             $("#project-id-select-error").html("there is an error in your team or year").addClass("error-msg"); 
         }else{       
             view.RenderPlayers(players)
@@ -16,8 +15,8 @@ addListners();
     }
 }
 
- async function filterHasBirthDatePlayers(year:String,teamMate:String){
-    const players = await model.FilterHasBirthDatePlayers(year,teamMate);    
+ async function filterBirthDatePlayers(year:String,teamMate:String){
+    const players = await model.FilterBirthDatePlayers(year,teamMate);    
     view.RenderPlayers(players)
 }
 
@@ -29,7 +28,7 @@ addListners();
 
 
  async function addPlayer(player:Player):Promise<Player |Object>{
-    const newPlayer= await model.addPlayerTeam(player);
+    const newPlayer= await model.addPlayerToDreamTeam(player);
     return newPlayer;
 }
  async function deletePlayer(player:Player):Promise<Player |Object>{
@@ -46,17 +45,16 @@ addListners();
 }
 
 
-    function findPlayerPush(thePlayer:any):Player{
-    const firstName= $(thePlayer).closest(".card-body").find(".card-first-name").text()
-    const lastName= $(thePlayer).closest(".card-body").find(".card-last-name").text()
-    const jersyNumber= $(thePlayer).closest(".card-body").find(".card-jersy").text()
-    const position= $(thePlayer).closest(".card-body").find(".card-position").text()   
-    const birthDate= $(thePlayer).closest(".card-body").find(".card-birth-date").text()
-    const dreamTeam= $(thePlayer).closest(".card-body").find(".card-dream-team").text()
-    const image= $(thePlayer).closest(".card").find("#image-Player").prop('src')
+    function getPlayerDetailsFromCardHtml(playerCardElement:JQuery<any>):Player{
+    const firstName= $(playerCardElement).closest(".card-body").find(".card-first-name").text()
+    const lastName= $(playerCardElement).closest(".card-body").find(".card-last-name").text()
+    const jersyNumber= $(playerCardElement).closest(".card-body").find(".card-jersy").text()
+    const position= $(playerCardElement).closest(".card-body").find(".card-position").text()   
+    const birthDate= $(playerCardElement).closest(".card-body").find(".card-birth-date").text()
+    const dreamTeam= $(playerCardElement).closest(".card-body").find(".card-dream-team").text()
+    const image= $(playerCardElement).closest(".card").find("#image-player").prop('src')
     const dreamTeamIn = dreamTeam === 'true';
     const player:Player = new Player(`${firstName}${lastName}`,firstName,lastName,jersyNumber,position,birthDate,dreamTeamIn,image);
-    
     return player;   
 }
 
@@ -72,14 +70,14 @@ function addListners(){
     $('#birth-date').on('click',()=>{
         const checkbox = document.getElementById('birth-date',) as HTMLInputElement | null;
           if (checkbox?.checked) {
-            getPlayerByTeamAndYear(filterHasBirthDatePlayers);    
+            getPlayerByTeamAndYear(filterBirthDatePlayers);    
           }else{
             getPlayerByTeamAndYear(getPlayers);
           }  
     })
 
     $('body').on('click','#add-player',function(){       
-        const player:Player = findPlayerPush($(this))
+        const player:Player = getPlayerDetailsFromCardHtml($(this))
         let playerNewPromise = addPlayer(player)  
         playerNewPromise.then(()=>{        
             $(this).hide();
@@ -87,12 +85,12 @@ function addListners(){
     })
     
     $('body').on('click','#delete-player',function(){
-       const player:Player = findPlayerPush($(this));
+       const player:Player = getPlayerDetailsFromCardHtml($(this));
        let playerNewPromise = this.deletePlayer(player)  
        playerNewPromise.then(()=>{ 
             let playerNewPromise = this.getDreamTeam()
             playerNewPromise.then((value: any)=>{             
-                this._view.RenderPlayers(value)     
+                this.view.RenderPlayers(value)     
                 $('.btn-outline-danger').show();        
             })         
              
@@ -111,8 +109,8 @@ function addListners(){
     }))    
     
     $('body').on('click','#stats-player',function(){
-        const player:Player = this.findPlayerPush($(this));   
-        let playerStatsPromise= this.getPlayerStats(player)  
+        const player:Player = getPlayerDetailsFromCardHtml($(this));   
+        let playerStatsPromise= getPlayerStats(player)  
         playerStatsPromise.then((value: any)=>{
             view.RenderPlayerStats(value);
              
