@@ -102,7 +102,7 @@ function addListners() {
         playerNewPromise.then(() => {
             let playerNewPromise = getDreamTeam();
             playerNewPromise.then((value) => {
-                this.view.RenderPlayers(value);
+                view.RenderPlayers(value);
                 $('.btn-outline-danger').show();
             });
         });

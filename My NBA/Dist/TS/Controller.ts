@@ -88,7 +88,7 @@ function addListners(){
        playerNewPromise.then(()=>{ 
             let playerNewPromise = getDreamTeam()
             playerNewPromise.then((value: any)=>{             
-                this.view.RenderPlayers(value)     
+                view.RenderPlayers(value)     
                 $('.btn-outline-danger').show();        
             })         
              
