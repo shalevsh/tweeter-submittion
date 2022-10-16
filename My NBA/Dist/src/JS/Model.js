@@ -41,7 +41,7 @@ class Model {
                 const urlGetDreamTeam = `/playersDream/`;
                 dreamTeam = yield $.get(urlGetDreamTeam);
                 const players_json = JSON.parse(dreamTeam);
-                const players = this.createPlayerDreamTeam(players_json);
+                const players = this.initDreamTeamPlayersFromArrayOfObjects(players_json);
                 return players;
             }
             catch (err) {
@@ -72,21 +72,21 @@ class Model {
             return players;
         });
     }
-    createPlayerDreamTeam(players) {
+    initDreamTeamPlayersFromArrayOfObjects(playersArray) {
         return __awaiter(this, void 0, void 0, function* () {
-            const playersArr = [];
-            players.forEach((player) => {
-                let image = `https://nba-players.herokuapp.com/players/${player.lastName}/${player.firstName}`;
-                playersArr.push(new Player(player.id, player.firstName, player.lastName, player.jerseyNumber, player.position, player.birthDate, true, image));
+            let playersArr = [];
+            playersArray.forEach((player) => {
+                let image = `https://nba-players.herokuapp.com/players/${player.last_name}/${player.first_name}`;
+                playersArr.push(new Player(player.id, player.first_name, player.last_name, player.jersey_number, player.position, player.birth_date, true, image));
             });
             return playersArr;
         });
     }
     AddPlayerToDreamTeam(player) {
         return __awaiter(this, void 0, void 0, function* () {
-            let newPlayerResponse;
+            let playerResponse;
             try {
-                newPlayerResponse = yield $.post({
+                playerResponse = yield $.post({
                     url: "/player/",
                     type: "post",
                     async: false,
@@ -96,8 +96,8 @@ class Model {
                         player
                     })
                 });
-                const players = JSON.parse(newPlayerResponse);
-                const newPlayer = this.createPlayerDreamTeam([players]);
+                const playerJson = JSON.parse(playerResponse);
+                const newPlayer = this.initDreamTeamPlayersFromArrayOfObjects([playerJson]);
                 return newPlayer;
             }
             catch (err) {

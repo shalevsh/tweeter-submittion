@@ -31,7 +31,7 @@ class Model{
                 const urlGetDreamTeam = `/playersDream/`;                  
                 dreamTeam= await $.get(urlGetDreamTeam)
                 const players_json:Player[] = JSON.parse(dreamTeam);     
-                const players:Promise<Player[]> = this.createPlayerDreamTeam(players_json);               
+                const players:Promise<Player[]> = this.initDreamTeamPlayersFromArrayOfObjects(players_json);               
                 return players;             
         } catch(err){
             return {err:err}
@@ -64,20 +64,20 @@ class Model{
     }
 
 
-    private async createPlayerDreamTeam(players:Player[]):Promise<Player[]>{
-        const playersArr:Player[]=[];   
-        players.forEach((player:Player) => {
-            let image:String=`https://nba-players.herokuapp.com/players/${player.lastName}/${player.firstName}`
-            playersArr.push(new Player(player.id,player.firstName,player.lastName,player.jerseyNumber,player.position,player.birthDate,true,image))
+    private async initDreamTeamPlayersFromArrayOfObjects(playersArray:any):Promise<Player[]>{
+        let playersArr:Player[]=[];   
+            playersArray.forEach((player:any) => {
+            let image:String=`https://nba-players.herokuapp.com/players/${player.last_name}/${player.first_name}`
+            playersArr.push(new Player(player.id, player.first_name, player.last_name, player.jersey_number, player.position, player.birth_date, true, image));
         });
-        return playersArr;
+            return playersArr;
     }
 
     
     public async AddPlayerToDreamTeam(player:Player):Promise<Player | Object> {                                 
-        let newPlayerResponse: string;   
+        let playerResponse: string;   
         try{
-            newPlayerResponse= await $.post({
+            playerResponse= await $.post({
                 url: "/player/",
                 type: "post",
                 async: false,
@@ -88,8 +88,8 @@ class Model{
                 })              
     
             }) 
-            const players = JSON.parse(newPlayerResponse);            
-            const newPlayer =  this.createPlayerDreamTeam([players])            
+            const playerJson = JSON.parse(playerResponse);            
+            const newPlayer =  this.initDreamTeamPlayersFromArrayOfObjects([playerJson])            
               
             return newPlayer;          
         } catch(err){
