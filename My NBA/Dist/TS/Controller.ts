@@ -84,9 +84,9 @@ function addListners(){
     
     $('body').on('click','#delete-player',function(){
        const player:Player = getPlayerDetailsFromCardHtml($(this));
-       let playerNewPromise = this.deletePlayer(player)  
+       let playerNewPromise = deletePlayer(player)  
        playerNewPromise.then(()=>{ 
-            let playerNewPromise = this.getDreamTeam()
+            let playerNewPromise = getDreamTeam()
             playerNewPromise.then((value: any)=>{             
                 this.view.RenderPlayers(value)     
                 $('.btn-outline-danger').show();        
