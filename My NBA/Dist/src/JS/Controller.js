@@ -11,6 +11,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 const model = new Model();
 const view = new View();
 addListners();
+function getPlayerByTeamAndYear(callback) {
+    const teamName = document.querySelector('#team-name');
+    const year = document.querySelector('#year-player');
+    callback(year.value, teamName.value);
+}
+function filterBirthDatePlayers(year, teamMate) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const players = yield model.FilterBirthDatePlayers(year, teamMate);
+        view.RenderPlayers(players);
+    });
+}
 function getPlayers(year, teamMate) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -26,17 +37,6 @@ function getPlayers(year, teamMate) {
             return error;
         }
     });
-}
-function filterBirthDatePlayers(year, teamMate) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const players = yield model.FilterBirthDatePlayers(year, teamMate);
-        view.RenderPlayers(players);
-    });
-}
-function getPlayerByTeamAndYear(callback) {
-    const teamName = document.querySelector('#team-name');
-    const year = document.querySelector('#year-player');
-    callback(year.value, teamName.value);
 }
 function addPlayer(player) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -117,12 +117,12 @@ function addListners() {
         });
     }));
     $('body').on('click', '#stats-player', function () {
-        window.scrollTo(0, 0);
         const player = getPlayerDetailsFromCardHtml($(this));
         let playerStatsPromise = getPlayerStats(player);
         playerStatsPromise.then((value) => {
             view.RenderPlayerStats(value);
         });
+        window.scrollTo(0, 0);
     });
     $('#team-name').on("blur", function () {
         $("#get-team").prop("disabled", false);

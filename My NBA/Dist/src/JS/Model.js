@@ -67,7 +67,7 @@ class Model {
                 const firstName = nameArr[0];
                 const lastName = nameArr[1];
                 let image = `https://nba-players.herokuapp.com/players/${lastName}/${firstName}`;
-                players.push(new Player(element.name, firstName, lastName, element.jersey, element.pos, element.dateOfBirthUTC, false, image));
+                players.push(new Player(element.name, firstName, lastName, element.jersey_number, element.position, element.dateOfBirthUTC, false, image));
             });
             return players;
         });

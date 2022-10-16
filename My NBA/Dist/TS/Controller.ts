@@ -2,7 +2,18 @@ const model : Model =new Model();
 const view: View = new View();
 addListners();
 
- async function getPlayers(year:String,teamMate:String) {
+function getPlayerByTeamAndYear(callback:Function){
+    const teamName = document.querySelector('#team-name') as HTMLInputElement;
+    const year = document.querySelector('#year-player') as HTMLInputElement;    
+    callback(year.value,teamName.value);
+}
+
+ async function filterBirthDatePlayers(year:String,teamMate:String){
+    const players = await model.FilterBirthDatePlayers(year,teamMate);    
+    view.RenderPlayers(players)
+}
+
+async function getPlayers(year:String,teamMate:String) {
     try{       
         const players= await model.GetPlayers(year,teamMate); 
         if(!Array.isArray(players)){
@@ -14,18 +25,6 @@ addListners();
         return error;
     }
 }
-
- async function filterBirthDatePlayers(year:String,teamMate:String){
-    const players = await model.FilterBirthDatePlayers(year,teamMate);    
-    view.RenderPlayers(players)
-}
-
- function getPlayerByTeamAndYear(callback:Function){
-    const teamName = document.querySelector('#team-name') as HTMLInputElement;
-    const year = document.querySelector('#year-player') as HTMLInputElement;    
-    callback(year.value,teamName.value);
-}
-
 
  async function addPlayer(player:Player):Promise<Player |Object>{
     const newPlayer= await model.AddPlayerToDreamTeam(player);
@@ -108,13 +107,12 @@ function addListners(){
     }))    
     
     $('body').on('click','#stats-player',function(){
-        window.scrollTo(0,0);
         const player:Player = getPlayerDetailsFromCardHtml($(this));   
         let playerStatsPromise= getPlayerStats(player)  
         playerStatsPromise.then((value: any)=>{
             view.RenderPlayerStats(value);            
         })
-       
+        window.scrollTo(0,0);
     })
     $('#team-name').on("blur",function(){
         $("#get-team").prop( "disabled", false );
